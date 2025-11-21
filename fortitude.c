@@ -152,9 +152,9 @@ int	ft_assert_false(int condition, const char *test_name)
 void	ft_print_part_header(const char *part_name)
 {
 	printf("\n%s", YELLOW);
-	printf("─────────────────────────────────────────────────────────────\n");
+	printf("-------------------------------------------------------------\n");
 	printf("  %s\n", part_name);
-	printf("─────────────────────────────────────────────────────────────%s\n",
+	printf("-------------------------------------------------------------%s\n",
 		RESET);
 }
 
