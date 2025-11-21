@@ -31,13 +31,38 @@ $(FORTITUDE_OBJS): %.o: %.c
 $(RUNNER_OBJS): %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Test targets - LIBFT_DIR can be set via environment or detected
+LIBFT_DIR ?= ../PROJECTS/Libft
+LIBFT = $(LIBFT_DIR)/libft.a
+TEST_LIBFT = tests/test_libft.c
+TEST_LIBFT_OBJ = $(TEST_LIBFT:.c=.o)
+TEST_LIBFT_BIN = test_libft
+
+test_libft: $(FORTITUDE_OBJS) $(TEST_LIBFT_OBJ)
+	@if [ ! -f "$(LIBFT)" ]; then \
+		echo "Building libft with bonus..."; \
+		cd $(LIBFT_DIR) && make bonus; \
+	fi
+	$(CC) $(CFLAGS) -o $(TEST_LIBFT_BIN) $(TEST_LIBFT_OBJ) \
+		$(FORTITUDE_OBJS) -L$(LIBFT_DIR) -lft
+	@echo "Running Libft tests..."
+	@./$(TEST_LIBFT_BIN) || true
+	@echo "\nCleaning target repository..."
+	@cd $(LIBFT_DIR) && make fclean
+	@echo "Cleaning test artifacts..."
+	@rm -f $(TEST_LIBFT_BIN)
+	@echo "Cleanup complete!"
+
+$(TEST_LIBFT_OBJ): $(TEST_LIBFT)
+	$(CC) $(CFLAGS) -I. -I$(LIBFT_DIR) -c $< -o $@
+
 clean:
 	rm -f $(FORTITUDE_OBJS) $(RUNNER_OBJS) $(TEST_LIBFT_OBJ)
 
 fclean: clean
-	rm -f $(RUNNER_NAME)
+	rm -f $(RUNNER_NAME) $(TEST_LIBFT_BIN)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test_libft
 

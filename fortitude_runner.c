@@ -240,11 +240,17 @@ static int	ft_test_project(void)
 	if (ft_is_libft_project() && ft_find_fortitude_dir(fortitude_path,
 			sizeof(fortitude_path)))
 	{
+		char	current_dir[MAX_PATH];
+		char	test_cmd[MAX_COMMAND_LEN * 2];
+
+		if (getcwd(current_dir, sizeof(current_dir)) == NULL)
+			strcpy(current_dir, ".");
 		printf("%sRunning Libft test suite from Fortitude...%s\n",
 			YELLOW, RESET);
-		snprintf(command, sizeof(command), "cd %s && make test_libft 2>&1",
-			fortitude_path);
-		pipe = popen(command, "r");
+		snprintf(test_cmd, sizeof(test_cmd),
+			"cd %s && LIBFT_DIR=\"%s\" make test_libft 2>&1",
+			fortitude_path, current_dir);
+		pipe = popen(test_cmd, "r");
 		if (pipe == NULL)
 		{
 			printf("%s[ERROR] Failed to execute tests!%s\n", RED, RESET);
