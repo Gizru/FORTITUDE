@@ -137,8 +137,9 @@ static char	*ft_find_make(void)
 	static char	make_path[MAX_PATH];
 	const char	*paths[] = {
 		"make",
-		"C:\\Program Files\\Git\\usr\\bin\\make.exe",
 		"C:\\Program Files\\Git\\mingw64\\bin\\make.exe",
+		"C:\\Program Files\\Git\\usr\\bin\\make.exe",
+		"C:\\Program Files\\Git\\bin\\make.exe",
 		NULL
 	};
 	int			i;
@@ -148,12 +149,18 @@ static char	*ft_find_make(void)
 	while (paths[i] != NULL)
 	{
 		if (i == 0)
-			return ("make");
-		if (stat(paths[i], &buffer) == 0)
 		{
-			strncpy(make_path, paths[i], MAX_PATH - 1);
-			make_path[MAX_PATH - 1] = '\0';
-			return (make_path);
+			if (stat("make", &buffer) == 0)
+				return ("make");
+		}
+		else
+		{
+			if (stat(paths[i], &buffer) == 0)
+			{
+				strncpy(make_path, paths[i], MAX_PATH - 1);
+				make_path[MAX_PATH - 1] = '\0';
+				return (make_path);
+			}
 		}
 		i++;
 	}
@@ -242,7 +249,6 @@ static int	ft_test_project(void)
 	FILE	*pipe;
 	char	buffer[1024];
 	char	fortitude_path[MAX_PATH];
-	char	command[MAX_COMMAND_LEN];
 
 	if (ft_file_exists("test_libft") || ft_file_exists("test"))
 	{
