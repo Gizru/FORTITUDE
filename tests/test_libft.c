@@ -768,7 +768,7 @@ int	main(void)
 	ft_run_part(&part2);
 	ft_print_part_header("Bonus - Linked list functions");
 	ft_run_part(&bonus);
-	printf("\n%s═══════════════════════════════════════════════════════════\n",
+	printf("\n%s============================================================\n",
 		BLUE);
 	printf("Overall Summary:\n");
 	printf("  Part 1: %d/%d passed\n", part1.passed_count,
@@ -780,7 +780,7 @@ int	main(void)
 			bonus.test_count);
 	else
 		printf("  Bonus: Not present (OK)\n");
-	printf("═══════════════════════════════════════════════════════════%s\n",
+	printf("============================================================%s\n",
 		RESET);
 	return ((part1.passed_count == part1.test_count &&
 			part2.passed_count == part2.test_count) ? 0 : 1);

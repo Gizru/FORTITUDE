@@ -15,13 +15,13 @@
 void	ft_print_header(const char *project_name)
 {
 	printf("\n%s", BLUE);
-	printf("╔══════════════════════════════════════════════════════════╗\n");
-	printf("║                                                          ║\n");
-	printf("║                    FORTITUDE TESTING                     ║\n");
-	printf("║                                                          ║\n");
-	printf("║                    Testing: %-30s ║\n", project_name);
-	printf("║                                                          ║\n");
-	printf("╚══════════════════════════════════════════════════════════╝\n");
+	printf("+==========================================================+\n");
+	printf("|                                                          |\n");
+	printf("|                    FORTITUDE TESTING                     |\n");
+	printf("|                                                          |\n");
+	printf("|                    Testing: %-30s |\n", project_name);
+	printf("|                                                          |\n");
+	printf("+==========================================================+\n");
 	printf("%s\n", RESET);
 }
 
@@ -43,7 +43,7 @@ void	ft_print_suite_summary(t_suite *suite)
 
 	failed = suite->test_count - suite->passed_count;
 	printf("\n%s", BLUE);
-	printf("═══════════════════════════════════════════════════════════\n");
+	printf("============================================================\n");
 	printf("Suite: %s\n", suite->name);
 	printf("Total tests: %d\n", suite->test_count);
 	printf("%sPassed: %d%s\n", GREEN, suite->passed_count, RESET);
@@ -51,7 +51,7 @@ void	ft_print_suite_summary(t_suite *suite)
 		printf("%sFailed: %d%s\n", RED, failed, RESET);
 	else
 		printf("%sFailed: %d%s\n", GREEN, failed, RESET);
-	printf("═══════════════════════════════════════════════════════════\n");
+	printf("============================================================\n");
 	printf("%s\n", RESET);
 }
 

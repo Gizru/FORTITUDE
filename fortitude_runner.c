@@ -104,10 +104,10 @@ static void	ft_print_file_list(t_file_info *files, int count)
 {
 	int	i;
 
-	printf("\n%s═══════════════════════════════════════════════════════════\n",
+	printf("\n%s============================================================\n",
 		BLUE);
 	printf("Project Files:\n");
-	printf("═══════════════════════════════════════════════════════════%s\n",
+	printf("============================================================%s\n",
 		RESET);
 	i = 0;
 	while (i < count)
@@ -364,13 +364,13 @@ int	main(int argc, char **argv)
 	if (getcwd(project_name, MAX_PATH) == NULL)
 		strcpy(project_name, "Unknown");
 	printf("\n%s", BLUE);
-	printf("╔══════════════════════════════════════════════════════════╗\n");
-	printf("║                                                          ║\n");
-	printf("║                    FORTITUDE RUNNER                      ║\n");
-	printf("║                                                          ║\n");
-	printf("║              Analyzing current directory                 ║\n");
-	printf("║                                                          ║\n");
-	printf("╚══════════════════════════════════════════════════════════╝\n");
+	printf("+==========================================================+\n");
+	printf("|                                                          |\n");
+	printf("|                    FORTITUDE RUNNER                      |\n");
+	printf("|                                                          |\n");
+	printf("|              Analyzing current directory                 |\n");
+	printf("|                                                          |\n");
+	printf("+==========================================================+\n");
 	printf("%s\n", RESET);
 	if (!ft_file_exists("Makefile") && !ft_file_exists("makefile"))
 	{
@@ -391,7 +391,7 @@ int	main(int argc, char **argv)
 	else
 		test_success = 0;
 	ft_clean_project();
-	printf("\n%s═══════════════════════════════════════════════════════════\n",
+	printf("\n%s============================================================\n",
 		BLUE);
 	printf("Summary:\n");
 	if (build_success)
@@ -407,7 +407,7 @@ int	main(int argc, char **argv)
 	else if (build_success)
 		printf("%s[INFO] Tests: Not run or failed%s\n", YELLOW, RESET);
 	printf("%s[SUCCESS] Cleanup: OK%s\n", GREEN, RESET);
-	printf("═══════════════════════════════════════════════════════════%s\n",
+	printf("============================================================%s\n",
 		RESET);
 	return (build_success && norm_success && test_success ? 0 : 1);
 }
