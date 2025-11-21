@@ -1,0 +1,22 @@
+# Build artifacts
+*.o
+*.a
+*.exe
+fortitude_runner
+test_libft
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+
