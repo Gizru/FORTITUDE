@@ -43,11 +43,12 @@ test_libft: $(FORTITUDE_OBJS) $(TEST_LIBFT_OBJ)
 		echo "Building libft with bonus..."; \
 		cd $(LIBFT_DIR) && make bonus; \
 	fi
-	$(CC) $(CFLAGS) -o $(TEST_LIBFT_BIN) $(TEST_LIBFT_OBJ) \
+	$(CC) $(CFLAGS) -I. -I$(LIBFT_DIR) -o $(TEST_LIBFT_BIN) $(TEST_LIBFT_OBJ) \
 		$(FORTITUDE_OBJS) -L$(LIBFT_DIR) -lft
 	@echo "Running Libft tests..."
 	@./$(TEST_LIBFT_BIN) || true
-	@echo "\nCleaning target repository..."
+	@echo ""
+	@echo "Cleaning target repository..."
 	@cd $(LIBFT_DIR) && make fclean
 	@echo "Cleaning test artifacts..."
 	@rm -f $(TEST_LIBFT_BIN)
