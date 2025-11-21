@@ -300,14 +300,26 @@ static int	ft_test_project(void)
 		{
 			if (current_dir_unix[i] == '\\')
 				current_dir_unix[i] = '/';
-			if (current_dir_unix[i] == ':')
-				current_dir_unix[i] = '\0';
 			i++;
 		}
-		if (current_dir_unix[0] == 'C' || current_dir_unix[0] == 'c')
-			snprintf(current_dir_unix, sizeof(current_dir_unix), "/c%s", current_dir + 2);
-		if (fortitude_path_unix[0] == 'C' || fortitude_path_unix[0] == 'c')
-			snprintf(fortitude_path_unix, sizeof(fortitude_path_unix), "/c%s", fortitude_path + 2);
+		if (current_dir_unix[0] >= 'A' && current_dir_unix[0] <= 'Z'
+			&& current_dir_unix[1] == ':')
+		{
+			current_dir_unix[0] = current_dir_unix[0] + 32;
+			current_dir_unix[1] = current_dir_unix[0];
+			memmove(current_dir_unix + 1, current_dir_unix + 2,
+				strlen(current_dir_unix) - 1);
+			current_dir_unix[0] = '/';
+		}
+		if (fortitude_path_unix[0] >= 'A' && fortitude_path_unix[0] <= 'Z'
+			&& fortitude_path_unix[1] == ':')
+		{
+			fortitude_path_unix[0] = fortitude_path_unix[0] + 32;
+			fortitude_path_unix[1] = fortitude_path_unix[0];
+			memmove(fortitude_path_unix + 1, fortitude_path_unix + 2,
+				strlen(fortitude_path_unix) - 1);
+			fortitude_path_unix[0] = '/';
+		}
 		printf("%sRunning Libft test suite from Fortitude...%s\n",
 			YELLOW, RESET);
 		snprintf(test_cmd, sizeof(test_cmd),
