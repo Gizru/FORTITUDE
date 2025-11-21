@@ -30,7 +30,7 @@ rm -rf tests/*.o
 The `.gitignore` file should exclude:
 - `*.o` (object files)
 - `*.exe` (executables)
-- `fortitude_runner` (binary)
+- `fortitude_runner` (binary, installed as `fortitude`)
 - `test_libft` (test binary)
 - IDE files
 - OS files
@@ -97,8 +97,9 @@ irm https://raw.githubusercontent.com/yourusername/FORTITUDE/main/install.ps1 | 
 
 ## Notes
 
-- The `fortitude_runner` automatically detects Libft projects and runs tests
-- Installation scripts add `fortitude_runner` to PATH
-- Users can run `fortitude_runner` or `fortitude` from any directory
+- The `fortitude` command automatically detects Libft projects and runs tests
+- Installation scripts add `fortitude` to PATH
+- Users can run `fortitude` from any directory
+- Only failures and errors are displayed - successful operations are suppressed
 - The framework is extensible for other 42 projects
 

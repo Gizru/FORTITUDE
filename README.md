@@ -2,7 +2,7 @@
 
 **A comprehensive automated testing framework for 42 school projects that validates builds, code style, and functionality with detailed reporting.**
 
-Fortitude streamlines the development and validation process for 42 projects by automating build verification, norminette style checking, comprehensive test execution, and automatic cleanup. Simply run `fortitude_runner` from any project directory to get instant feedback on your code quality and correctness.
+Fortitude streamlines the development and validation process for 42 projects by automating build verification, norminette style checking, comprehensive test execution, and automatic cleanup. Simply run `fortitude` from any project directory to get instant feedback on your code quality and correctness. Only failures and errors are displayed - successful operations are suppressed for cleaner output.
 
 ## Features
 
@@ -57,8 +57,6 @@ cd FORTITUDE
 Simply navigate to your 42 project directory and run:
 
 ```bash
-fortitude_runner
-# or
 fortitude
 ```
 

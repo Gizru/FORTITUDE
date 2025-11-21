@@ -69,14 +69,9 @@ echo "✓ Build complete"
 echo ""
 
 # Install binary
-echo "Installing fortitude_runner..."
-cp fortitude_runner "$BIN_DIR/fortitude_runner"
-chmod +x "$BIN_DIR/fortitude_runner"
-
-# Create symlink for 'fortitude' command
-if [ ! -f "$BIN_DIR/fortitude" ]; then
-	ln -s "$BIN_DIR/fortitude_runner" "$BIN_DIR/fortitude"
-fi
+echo "Installing fortitude..."
+cp fortitude_runner "$BIN_DIR/fortitude"
+chmod +x "$BIN_DIR/fortitude"
 echo "✓ Binary installed"
 echo ""
 
@@ -113,7 +108,7 @@ fi
 echo ""
 
 # Verify installation
-if command -v fortitude_runner &> /dev/null || [ -f "$BIN_DIR/fortitude_runner" ]; then
+if command -v fortitude &> /dev/null || [ -f "$BIN_DIR/fortitude" ]; then
 	echo "╔══════════════════════════════════════════════════════════╗"
 	echo "║                                                          ║"
 	echo "║          Fortitude installed successfully!               ║"
@@ -121,8 +116,7 @@ if command -v fortitude_runner &> /dev/null || [ -f "$BIN_DIR/fortitude_runner" 
 	echo "╚══════════════════════════════════════════════════════════╝"
 	echo ""
 	echo "Usage:"
-	echo "  fortitude_runner    # Run from any project directory"
-	echo "  fortitude           # Alias for fortitude_runner"
+	echo "  fortitude           # Run from any project directory"
 	echo ""
 	echo "If you just installed, you may need to:"
 	echo "  source $SHELL_RC"

@@ -69,15 +69,8 @@ Write-Host "✓ Build complete" -ForegroundColor Green
 Write-Host ""
 
 # Install binary
-Write-Host "Installing fortitude_runner..." -ForegroundColor Yellow
-Copy-Item "fortitude_runner.exe" "$BIN_DIR\fortitude_runner.exe" -Force
-
-# Create alias script
-$FORTITUDE_SCRIPT = "$BIN_DIR\fortitude.ps1"
-@"
-# Fortitude wrapper script
-& `"$BIN_DIR\fortitude_runner.exe`" `$args
-"@ | Out-File -FilePath $FORTITUDE_SCRIPT -Encoding UTF8
+Write-Host "Installing fortitude..." -ForegroundColor Yellow
+Copy-Item "fortitude_runner.exe" "$BIN_DIR\fortitude.exe" -Force
 
 Write-Host "✓ Binary installed" -ForegroundColor Green
 Write-Host ""
@@ -103,8 +96,7 @@ Write-Host "║                                                          ║" -F
 Write-Host "╚══════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Usage:" -ForegroundColor Yellow
-Write-Host "  fortitude_runner    # Run from any project directory"
-Write-Host "  fortitude           # Alias for fortitude_runner"
+Write-Host "  fortitude           # Run from any project directory"
 Write-Host ""
 Write-Host "Note: You may need to restart your terminal for PATH changes to take effect."
 

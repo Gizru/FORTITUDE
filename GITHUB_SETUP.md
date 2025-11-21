@@ -61,7 +61,7 @@ git push origin main
 ## Excluded (via .gitignore)
 
 ❌ Build artifacts (`.o`, `.exe`)
-❌ Compiled binaries (`fortitude_runner`)
+❌ Compiled binaries (`fortitude_runner` - installed as `fortitude`)
 ❌ IDE files
 ❌ OS files
 
@@ -79,8 +79,6 @@ irm https://raw.githubusercontent.com/yourusername/FORTITUDE/main/install.ps1 | 
 
 Then use from any directory:
 ```bash
-fortitude_runner
-# or
 fortitude
 ```
 

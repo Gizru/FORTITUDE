@@ -27,11 +27,8 @@ void	ft_print_header(const char *project_name)
 
 void	ft_print_test_result(const char *test_name, int passed)
 {
-	if (passed)
-	{
-		printf("%s[PASS]%s %s\n", GREEN, RESET, test_name);
-	}
-	else
+	/* Only print failures, suppress successful tests */
+	if (!passed)
 	{
 		printf("%s[FAIL]%s %s\n", RED, RESET, test_name);
 	}

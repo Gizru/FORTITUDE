@@ -23,7 +23,6 @@ fi
 
 # Remove binaries
 echo "Removing binaries..."
-rm -f "$BIN_DIR/fortitude_runner"
 rm -f "$BIN_DIR/fortitude"
 echo "✓ Binaries removed"
 

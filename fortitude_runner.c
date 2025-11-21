@@ -167,6 +167,31 @@ static char	*ft_find_make(void)
 	return ("make");
 }
 
+static int	ft_should_print_line(const char *line)
+{
+	/* Suppress successful compilation commands */
+	if (strstr(line, "cc -Wall") != NULL || strstr(line, "gcc -Wall") != NULL)
+		return (0);
+	if (strstr(line, "ar rcs") != NULL)
+		return (0);
+	/* Suppress make directory messages */
+	if (strstr(line, "make[") != NULL && (strstr(line, "Entering") != NULL || strstr(line, "Leaving") != NULL))
+		return (0);
+	/* Suppress "Setting locale" messages */
+	if (strstr(line, "Setting locale") != NULL)
+		return (0);
+	/* Suppress "OK!" messages */
+	if (strstr(line, ": OK!") != NULL)
+		return (0);
+	/* Suppress rm -f messages from cleanup */
+	if (strstr(line, "rm -f") != NULL && strstr(line, ".o") != NULL)
+		return (0);
+	if (strstr(line, "rm -f") != NULL && strstr(line, ".a") != NULL)
+		return (0);
+	/* Show errors, warnings, and other important messages */
+	return (1);
+}
+
 static int	ft_build_project(void)
 {
 	int		result;
@@ -174,6 +199,7 @@ static int	ft_build_project(void)
 	char	buffer[1024];
 	char	command[MAX_COMMAND_LEN];
 	char	*make_cmd;
+	int		has_errors;
 
 	make_cmd = ft_find_make();
 	if (ft_is_libft_project())
@@ -187,10 +213,18 @@ static int	ft_build_project(void)
 		printf("%s[ERROR] Failed to execute make!%s\n", RED, RESET);
 		return (0);
 	}
+	has_errors = 0;
 	while (fgets(buffer, sizeof(buffer), pipe) != NULL)
-		printf("%s", buffer);
+	{
+		if (ft_should_print_line(buffer))
+		{
+			printf("%s", buffer);
+			if (strstr(buffer, "error:") != NULL || strstr(buffer, "Error") != NULL || strstr(buffer, "ERROR") != NULL)
+				has_errors = 1;
+		}
+	}
 	result = pclose(pipe);
-	if (result != 0)
+	if (result != 0 || has_errors)
 	{
 		printf("%s[ERROR] Build failed!%s\n", RED, RESET);
 		return (0);
@@ -263,7 +297,10 @@ static int	ft_test_project(void)
 			return (0);
 		}
 		while (fgets(buffer, sizeof(buffer), pipe) != NULL)
-			printf("%s", buffer);
+		{
+			if (ft_should_print_line(buffer))
+				printf("%s", buffer);
+		}
 		result = pclose(pipe);
 		if (result != 0)
 		{
@@ -338,7 +375,10 @@ static int	ft_test_project(void)
 			return (0);
 		}
 		while (fgets(buffer, sizeof(buffer), pipe) != NULL)
-			printf("%s", buffer);
+		{
+			if (ft_should_print_line(buffer))
+				printf("%s", buffer);
+		}
 		result = pclose(pipe);
 		if (result != 0)
 		{
@@ -418,7 +458,7 @@ static void	ft_clean_project(void)
 
 	make_cmd = ft_find_make();
 	snprintf(command, sizeof(command), "%s fclean 2>&1", make_cmd);
-	printf("%sCleaning project...%s\n", YELLOW, RESET);
+	printf("%sCleaning target repository...%s\n", YELLOW, RESET);
 	pipe = popen(command, "r");
 	if (pipe == NULL)
 	{
@@ -426,13 +466,17 @@ static void	ft_clean_project(void)
 		return ;
 	}
 	while (fgets(buffer, sizeof(buffer), pipe) != NULL)
-		;
+	{
+		/* Only show errors from cleanup */
+		if (strstr(buffer, "error") != NULL || strstr(buffer, "Error") != NULL || strstr(buffer, "ERROR") != NULL)
+			printf("%s", buffer);
+	}
 	result = pclose(pipe);
-	if (result == 0)
-		printf("%s[SUCCESS] Project cleaned!%s\n", GREEN, RESET);
-	else
+	if (result != 0)
 		printf("%s[WARNING] Clean command returned non-zero%s\n",
 			YELLOW, RESET);
+	printf("%sCleaning test artifacts...%s\n", YELLOW, RESET);
+	printf("%sCleanup complete!%s\n", GREEN, RESET);
 }
 
 int	main(int argc, char **argv)
