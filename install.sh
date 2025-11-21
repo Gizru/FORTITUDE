@@ -86,20 +86,29 @@ if [ -n "$ZSH_VERSION" ]; then
 	SHELL_RC="$HOME/.zshrc"
 elif [ -n "$BASH_VERSION" ]; then
 	SHELL_RC="$HOME/.bashrc"
+elif [ -f "$HOME/.bash_profile" ]; then
+	SHELL_RC="$HOME/.bash_profile"
+elif [ -f "$HOME/.profile" ]; then
+	SHELL_RC="$HOME/.profile"
 fi
 
-if [ -n "$SHELL_RC" ] && [ -f "$SHELL_RC" ]; then
+if [ -n "$SHELL_RC" ]; then
+	if [ ! -f "$SHELL_RC" ]; then
+		touch "$SHELL_RC"
+	fi
 	if ! grep -q "$BIN_DIR" "$SHELL_RC"; then
 		echo "Adding $BIN_DIR to PATH in $SHELL_RC..."
 		echo "" >> "$SHELL_RC"
 		echo "# Fortitude" >> "$SHELL_RC"
 		echo "export PATH=\"\$PATH:$BIN_DIR\"" >> "$SHELL_RC"
-		echo "✓ PATH updated"
+		echo "✓ PATH updated in $SHELL_RC"
 	else
-		echo "✓ PATH already configured"
+		echo "✓ PATH already configured in $SHELL_RC"
 	fi
 else
-	echo "⚠ Warning: Could not detect shell. Please add $BIN_DIR to your PATH manually."
+	echo "⚠ Warning: Could not detect shell configuration file."
+	echo "   Please add the following to your shell configuration:"
+	echo "   export PATH=\"\$PATH:$BIN_DIR\""
 fi
 echo ""
 
