@@ -132,17 +132,47 @@ static int	ft_is_libft_project(void)
 	return (ft_file_exists("libft.h") && ft_file_exists("Makefile"));
 }
 
+static char	*ft_find_make(void)
+{
+	static char	make_path[MAX_PATH];
+	const char	*paths[] = {
+		"make",
+		"C:\\Program Files\\Git\\usr\\bin\\make.exe",
+		"C:\\Program Files\\Git\\mingw64\\bin\\make.exe",
+		NULL
+	};
+	int			i;
+	struct stat	buffer;
+
+	i = 0;
+	while (paths[i] != NULL)
+	{
+		if (i == 0)
+			return ("make");
+		if (stat(paths[i], &buffer) == 0)
+		{
+			strncpy(make_path, paths[i], MAX_PATH - 1);
+			make_path[MAX_PATH - 1] = '\0';
+			return (make_path);
+		}
+		i++;
+	}
+	return ("make");
+}
+
 static int	ft_build_project(void)
 {
 	int		result;
 	FILE	*pipe;
 	char	buffer[1024];
-	char	*command;
+	char	command[MAX_COMMAND_LEN];
+	char	*make_cmd;
 
+	make_cmd = ft_find_make();
 	if (ft_is_libft_project())
-		command = "make bonus 2>&1";
+		snprintf(command, sizeof(command), "%s bonus 2>&1", make_cmd);
 	else
-		command = "make all 2>&1";
+		snprintf(command, sizeof(command), "%s all 2>&1", make_cmd);
 	printf("%sBuilding project...%s\n", YELLOW, RESET);
 	pipe = popen(command, "r");
 	if (pipe == NULL)
@@ -332,9 +362,13 @@ static void	ft_clean_project(void)
 	int		result;
 	FILE	*pipe;
 	char	buffer[1024];
+	char	command[MAX_COMMAND_LEN];
+	char	*make_cmd;
 
+	make_cmd = ft_find_make();
+	snprintf(command, sizeof(command), "%s fclean 2>&1", make_cmd);
 	printf("%sCleaning project...%s\n", YELLOW, RESET);
-	pipe = popen("make fclean 2>&1", "r");
+	pipe = popen(command, "r");
 	if (pipe == NULL)
 	{
 		printf("%s[ERROR] Failed to execute make fclean!%s\n", RED, RESET);
