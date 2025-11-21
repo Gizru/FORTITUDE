@@ -278,15 +278,41 @@ static int	ft_test_project(void)
 	{
 		char	current_dir[MAX_PATH];
 		char	test_cmd[MAX_COMMAND_LEN * 2];
-		char	*shell_cmd;
+		char	fortitude_path_unix[MAX_PATH];
+		char	current_dir_unix[MAX_PATH];
+		int		i;
 
 		if (getcwd(current_dir, sizeof(current_dir)) == NULL)
 			strcpy(current_dir, ".");
+		strncpy(fortitude_path_unix, fortitude_path, MAX_PATH - 1);
+		fortitude_path_unix[MAX_PATH - 1] = '\0';
+		strncpy(current_dir_unix, current_dir, MAX_PATH - 1);
+		current_dir_unix[MAX_PATH - 1] = '\0';
+		i = 0;
+		while (fortitude_path_unix[i] != '\0')
+		{
+			if (fortitude_path_unix[i] == '\\')
+				fortitude_path_unix[i] = '/';
+			i++;
+		}
+		i = 0;
+		while (current_dir_unix[i] != '\0')
+		{
+			if (current_dir_unix[i] == '\\')
+				current_dir_unix[i] = '/';
+			if (current_dir_unix[i] == ':')
+				current_dir_unix[i] = '\0';
+			i++;
+		}
+		if (current_dir_unix[0] == 'C' || current_dir_unix[0] == 'c')
+			snprintf(current_dir_unix, sizeof(current_dir_unix), "/c%s", current_dir + 2);
+		if (fortitude_path_unix[0] == 'C' || fortitude_path_unix[0] == 'c')
+			snprintf(fortitude_path_unix, sizeof(fortitude_path_unix), "/c%s", fortitude_path + 2);
 		printf("%sRunning Libft test suite from Fortitude...%s\n",
 			YELLOW, RESET);
 		snprintf(test_cmd, sizeof(test_cmd),
 			"\"C:\\Program Files\\Git\\bin\\bash.exe\" -c \"cd '%s' && LIBFT_DIR='%s' make test_libft 2>&1\"",
-			fortitude_path, current_dir);
+			fortitude_path_unix, current_dir_unix);
 		pipe = popen(test_cmd, "r");
 		if (pipe == NULL)
 		{
