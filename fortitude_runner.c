@@ -323,7 +323,7 @@ static int	ft_test_project(void)
 		printf("%sRunning Libft test suite from Fortitude...%s\n",
 			YELLOW, RESET);
 		snprintf(test_cmd, sizeof(test_cmd),
-			"\"C:\\Program Files\\Git\\bin\\bash.exe\" -c \"cd '%s' && LIBFT_DIR='%s' make test_libft 2>&1\"",
+			"\"C:/Program Files/Git/bin/bash.exe\" -c \"cd '%s' && LIBFT_DIR='%s' make test_libft 2>&1\"",
 			fortitude_path_unix, current_dir_unix);
 		pipe = popen(test_cmd, "r");
 		if (pipe == NULL)
