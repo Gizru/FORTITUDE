@@ -1,0 +1,21 @@
+# Line ending configuration
+# Ensure shell scripts always use LF (Unix) line endings for compatibility
+
+*.sh text eol=lf
+*.bash text eol=lf
+Makefile text eol=lf
+
+# C source files - LF is standard
+*.c text eol=lf
+*.h text eol=lf
+
+# PowerShell scripts - CRLF is standard on Windows
+*.ps1 text eol=crlf
+
+# Documentation
+*.md text eol=lf
+*.txt text eol=lf
+
+# Auto detect for other text files
+* text=auto
+
